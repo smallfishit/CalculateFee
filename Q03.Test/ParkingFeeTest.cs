@@ -21,10 +21,10 @@ namespace Q03.Test
             //建立停車費計算物件
             ParkingFeeCalculator parkFee = new ParkingFeeCalculator();
             //計算停車時間
-            var results = parkFee.GetFeeFromManyDate(start_time, end_time);
+            ParkingFee results = parkFee.CalcParkingFee(start_time, end_time);
             //驗證結果是否正確
-            Assert.AreEqual(totalFee, results.TotlaFee);
-            Assert.AreEqual(days, results.Days);
+            Assert.AreEqual(totalFee, results.TotalFee);
+            Assert.AreEqual(days, results.Items.Count());
         }
 
         /// <summary>

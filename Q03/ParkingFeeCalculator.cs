@@ -96,7 +96,7 @@ namespace Q03
         /// <param name="start_time">停車開始時間</param>
         /// <param name="end_time">停車結束時間</param>
         /// <returns></returns>
-        public (int TotlaFee, int Days) GetFeeFromManyDate(DateTime start_time, DateTime end_time)
+        public ParkingFee CalcParkingFee(DateTime start_time, DateTime end_time)
 
         {
             IEnumerable<SingleDayFee> feeList = GetFeeItemsFromManyDate(start_time, end_time);
@@ -109,7 +109,9 @@ namespace Q03
                 totalFee += GetFeeFromOneDate(data.StartTime, data.EndTime);
             }
 
-            return (totalFee, days);
+            ParkingFee feeData = new ParkingFee(feeList, totalFee);
+
+            return feeData;
         }
     }
 }
