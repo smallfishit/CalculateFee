@@ -62,7 +62,9 @@ namespace Q03.Test
         /// <param name="start_time">開始時間</param>
         /// <param name="end_time">結束時間</param>
         /// <param name="fee">預期停車費</param>
-        [TestCase("2022/5/1 23:48:00", "2022/5/2 00:11:59", 14)]
+        [TestCase("2022/5/1 23:48:00", "2022/5/2 00:00:00", 7)] // 跨一天,收費  
+        [TestCase("2022/5/1 23:48:00", "2022/5/2 00:11:59", 14)] // 跨一天,收費
+        [TestCase("2022/5/1 00:00:00", "2022/5/2 00:11:59", 57)] // 跨一天,收費
         [Test]
         public void GetFeeFromDate_InputDateTime_ReturnFeeOneDay2(DateTime start_time, DateTime end_time, int fee)
         {
@@ -75,7 +77,9 @@ namespace Q03.Test
         /// <param name="start_time">開始時間</param>
         /// <param name="end_time">結束時間</param>
         /// <param name="fee">預期停車費</param>
-        [TestCase("2022/5/1 23:48:00", "2022/5/3 00:11:59", 64)]
+        [TestCase("2022/5/1 23:49:00", "2022/5/3 00:11:59", 57)] // 跨2天,收費
+        [TestCase("2022/5/1 22:59:00", "2022/5/3 00:11:59", 67)] // 跨2天,收費
+        [TestCase("2022/5/1 00:00:00", "2022/5/3 00:11:59", 107)] // 跨2天,收費
         [Test]
         public void GetFeeFromDate_InputDateTime_ReturnFeeMoreDay(DateTime start_time, DateTime end_time, int fee)
         {
