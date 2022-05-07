@@ -65,7 +65,7 @@ namespace Q03
         /// <param name="start_time">停車開始時間</param>
         /// <param name="end_time">停車結束時間</param>
         /// <returns></returns>
-        public IEnumerable<SingleDayFee> GetFeeItemsFromManyDate(DateTime start_time, DateTime end_time)
+        public IEnumerable<SingleDayFee> CalcFeeForMultiDays(DateTime start_time, DateTime end_time)
         {
             if (end_time < start_time)
             {
@@ -80,6 +80,7 @@ namespace Q03
                 feeData = new SingleDayFee();
                 feeData.StartTime = Convert.ToDateTime($"{end_time.ToString("yyyy/MM/dd")} 00:00:00");
                 feeData.EndTime = end_time;
+                feeData.Fee = GetFeeFromOneDate(feeData.StartTime, feeData.EndTime);
                 yield return feeData;
                 end_time = Convert.ToDateTime($"{end_time.AddDays(-1).ToString("yyyy/MM/dd")} 23:59:59");
             }
@@ -87,6 +88,7 @@ namespace Q03
             feeData = new SingleDayFee();
             feeData.StartTime = start_time;
             feeData.EndTime = end_time;
+            feeData.Fee = GetFeeFromOneDate(feeData.StartTime, feeData.EndTime);
             yield return feeData;
         }
 
@@ -99,14 +101,14 @@ namespace Q03
         public ParkingFee CalcParkingFee(DateTime start_time, DateTime end_time)
 
         {
-            IEnumerable<SingleDayFee> feeList = GetFeeItemsFromManyDate(start_time, end_time);
+            IEnumerable<SingleDayFee> feeList = CalcFeeForMultiDays(start_time, end_time);
 
             int totalFee = 0;
             int days = feeList.Count();
 
             foreach (SingleDayFee data in feeList)
             {
-                totalFee += GetFeeFromOneDate(data.StartTime, data.EndTime);
+                totalFee += data.Fee;
             }
 
             ParkingFee feeData = new ParkingFee(feeList, totalFee);
