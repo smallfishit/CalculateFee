@@ -79,11 +79,11 @@ public int CalcFee(DateTime start, DateTime end){ // 傳回應付停車費
   
 承上題  
 
-###限制  
+### 限制  
 停車的時間起迄不一定是同一天  
 在 CalcFeeForMultiDays() 必需檢查輸入時間的大小關係, start 必需小於 end  
   
-###需求  
+### 需求  
 請以以下規則來計算應付的停車費  
 傳回型別是 IEnumerable<SingleDayFee> 不是 int  
 ```
@@ -103,7 +103,7 @@ public class SingleDayFee{
 }
 ```
 
-###進階題
+### 進階題
 在本題要求傳回型別是 IEnumerable<SingleDayFee>  
 只是為了簡化程式, 如果各位能力所及, 可以改寫成傳回 ParkingFee 型別, client 會更方便使用  
   
@@ -131,13 +131,13 @@ public class SingleDayFee{
 }
 ```
 
-###收費規則  
+### 收費規則  
 如果停車時間沒有跨越一天, 就按 Q2 規則計算即可, 傳回的集合裡,包含一筆記錄  
 如果停車時間有跨越一天以上  
 先根據入場/離場時間, 切割成多筆單日停車時間  
 再逐筆計算每天應付費用  
 
-###範例
+### 範例
 範例 1 - 沒有跨天  
 直接套 Q2 的計算邏輯  
   
