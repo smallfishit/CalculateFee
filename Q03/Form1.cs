@@ -33,8 +33,8 @@ namespace Q03
             {
                 ParkingFeeCalculator parkFee = new ParkingFeeCalculator();
                 //計算停車總分鐘數
-                int result = parkFee.GetFeeFromDate(dateTimePicker1.Value, dateTimePicker2.Value);
-                richTextBox1.Text = $"總停車費 = {result}{Environment.NewLine}";
+                var results = parkFee.GetFeeFromManyDate(dateTimePicker1.Value, dateTimePicker2.Value);
+                richTextBox1.Text = $"總日數 = {results.Days}{Environment.NewLine}總停車費 = {results.TotlaFee}{Environment.NewLine}";
             }
             catch (Exception ex)
             {
