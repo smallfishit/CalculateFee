@@ -77,18 +77,13 @@ namespace Q03
             SingleDayFee feeData = null;
             while (end_time.Date > start_time.Date)
             {
-                feeData = new SingleDayFee();
-                feeData.StartTime = Convert.ToDateTime($"{end_time.ToString("yyyy/MM/dd")} 00:00:00");
-                feeData.EndTime = end_time;
-                feeData.Fee = GetFeeFromOneDate(feeData.StartTime, feeData.EndTime);
+                DateTime startTime = Convert.ToDateTime($"{end_time.ToString("yyyy/MM/dd")} 00:00:00");
+                feeData = new SingleDayFee(startTime, end_time, GetFeeFromOneDate(startTime, end_time));
                 yield return feeData;
                 end_time = Convert.ToDateTime($"{end_time.AddDays(-1).ToString("yyyy/MM/dd")} 23:59:59");
             }
 
-            feeData = new SingleDayFee();
-            feeData.StartTime = start_time;
-            feeData.EndTime = end_time;
-            feeData.Fee = GetFeeFromOneDate(feeData.StartTime, feeData.EndTime);
+            feeData = new SingleDayFee(start_time, end_time, GetFeeFromOneDate(start_time, end_time));
             yield return feeData;
         }
 
@@ -103,15 +98,9 @@ namespace Q03
         {
             IEnumerable<SingleDayFee> feeList = CalcFeeForMultiDays(start_time, end_time);
 
-            int totalFee = 0;
             int days = feeList.Count();
 
-            foreach (SingleDayFee data in feeList)
-            {
-                totalFee += data.Fee;
-            }
-
-            ParkingFee feeData = new ParkingFee(feeList, totalFee);
+            ParkingFee feeData = new ParkingFee(feeList);
 
             return feeData;
         }

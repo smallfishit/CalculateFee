@@ -20,15 +20,15 @@ namespace Q03
             TotalFee = 0;
         }
 
-        /// <summary>
-        /// 帶入參數的建構子
-        /// </summary>
-        /// <param name="Items">取得多日的停車資料物件</param>
-        /// <param name="TotalFee">應收取總費用</param>
-        public ParkingFee(IEnumerable<SingleDayFee> Items, int TotalFee)
+        public ParkingFee(IEnumerable<SingleDayFee> Items)
         {
             this.Items = Items;
-            this.TotalFee = TotalFee;
+            ParkingFeeCalculator feeCalc = new ParkingFeeCalculator();
+            TotalFee = 0;
+            foreach(SingleDayFee data in Items)
+            {
+                TotalFee += feeCalc.GetFeeFromOneDate(data.StartTime, data.EndTime);
+            }
         }
     }
 }

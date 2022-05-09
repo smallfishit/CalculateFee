@@ -9,11 +9,11 @@ namespace Q03
     public class SingleDayFee
     {
         /// <summary>精確到分鐘的入場時間</summary>
-        public DateTime StartTime { get; set; }
+        public DateTime StartTime { get; }
         /// <summary>精確到分鐘的離場時間</summary>
-        public DateTime EndTime { get; set; }
+        public DateTime EndTime { get; }
         /// <summary>本日應收取費用</summary>
-        public int Fee { get; set; }
+        public int Fee { get; }
 
         /// <summary>基本的建構子</summary>
         public SingleDayFee()
